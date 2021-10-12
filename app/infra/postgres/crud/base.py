@@ -9,8 +9,8 @@ class CRUDBase(ICrudBase[ModelType, CreateSchemaType, UpdateSchemaType]):
     def __init__(self, model: ModelType):
         self.model = model
 
-    async def get_by_name(self, *, name: str) -> Union[dict, None]:
-        model = await self.model.filter(name=name).first().values()
+    async def get_by_id(self, *, id: int) -> Union[dict, None]:
+        model = await self.model.filter(id=id).first().values()
         if model:
             return model[0]
         return None
@@ -40,19 +40,19 @@ class CRUDBase(ICrudBase[ModelType, CreateSchemaType, UpdateSchemaType]):
         await model.save()
         return model
 
-    async def update(self, *, name: str, obj_in: Dict[str, Any]) -> Union[dict, None]:
+    async def update(self, *, id: int, obj_in: Dict[str, Any]) -> Union[dict, None]:
         if not obj_in:
-            model = await self.model.filter(name=name).first().values()
+            model = await self.model.filter(id=id).first().values()
         else:
-            model = await self.model.filter(name=name).update(**obj_in)
+            model = await self.model.filter(id=id).update(**obj_in)
         if model:
-            update_model = await self.model.filter(name=name).first().values()
+            update_model = await self.model.filter(id=id).first().values()
             model_m = self.model(**update_model[0])
             update_fields = list(update_model[0].keys())
             await model_m.save(update_fields=update_fields)
             return update_model[0]
         return None
 
-    async def delete(self, *, name: str) -> int:
-        model = await self.model.filter(name=name).first().delete()
+    async def delete(self, *, id: int) -> int:
+        model = await self.model.filter(id=id).first().delete()
         return model

@@ -26,7 +26,7 @@ class ICrudBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         raise NotImplementedError
 
     @abstractmethod
-    async def get_by_name(self, *, name: str) -> Any:   ##dog_name
+    async def get_by_id(self, *, id: int) -> Any:
         raise NotImplementedError
 
     @abstractmethod
