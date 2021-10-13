@@ -9,7 +9,7 @@ from app.schemas.dog_schema import Dog_Schema, Dog_Schema_Update
 class DogCrud(CRUDBase[Dog, Dog_Schema, Dog_Schema_Update]):
 
     async def createDog(self, dog_name):
-        picture_dog = image_service
+        picture_dog = image_service.up_image()
     # Se crea el usuario admin con el cual podemos crear un primer perro
     ##id_user = await User.get(id=int(1))
     # Además se convierte id en entero para que lo tome como el id del modelo
